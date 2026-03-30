@@ -1,8 +1,10 @@
+
+
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/ncdc-ica-heritage
+    url: jdbc:postgresql://pg_container:5432/cch
     username: postgres
-    password: ${DB_PASSWORD}
+    password: 81524Rac
     driver-class-name: org.postgresql.Driver
 
   jpa:

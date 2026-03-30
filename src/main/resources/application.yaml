@@ -1,3 +1,6 @@
+server:
+  servlet:
+    context-path: /cch
 spring:
   profiles:
-    active: dev
+    active: prod
