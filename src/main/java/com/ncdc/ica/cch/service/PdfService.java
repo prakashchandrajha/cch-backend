@@ -158,13 +158,7 @@ public class PdfService {
             // SECTION P
             // =========================
             addSectionTitle(document, "Section P: Supporting Materials");
-            StringBuilder materials = new StringBuilder();
-            if (form.getLettersConsent() != null && form.getLettersConsent()) materials.append("Letters of consent, ");
-            if (form.getPhotos() != null && form.getPhotos()) materials.append("High-resolution photos, ");
-            if (form.getVideo() != null && form.getVideo()) materials.append("Video documentation, ");
-            if (form.getArchivalMaterials() != null && form.getArchivalMaterials()) materials.append("Archival materials, ");
-            if (form.getReferencesProvided() != null && form.getReferencesProvided()) materials.append("References/Bibliography, ");
-            addField(document, "Supporting Materials", materials.length() > 0 ? materials.substring(0, materials.length() - 2) : "None");
+            addField(document, "Video Documentation Included", form.getVideo() != null && form.getVideo() ? "Yes" : "No");
 
             // =========================
             // SECTION Q

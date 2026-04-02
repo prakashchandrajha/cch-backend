@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://pg_container:5432/cch
+    url: jdbc:postgresql://172.18.0.1:5432/cch
     username: postgres
     password: 81524Rac
     driver-class-name: org.postgresql.Driver
@@ -13,7 +13,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
 
     properties:
       hibernate:

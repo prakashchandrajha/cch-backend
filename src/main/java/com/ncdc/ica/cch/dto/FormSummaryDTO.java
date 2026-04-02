@@ -12,4 +12,10 @@ public class FormSummaryDTO {
     private String officialName;
     private String contactPerson;
     private LocalDate submissionDate;
+
+    // File availability
+    private boolean hasLettersConsent;
+    private boolean hasPhotos;
+    private boolean hasArchivalMaterials;
+    private boolean hasReferences;
 }

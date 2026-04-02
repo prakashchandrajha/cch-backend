@@ -2,6 +2,7 @@ package com.ncdc.ica.cch.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -108,12 +109,27 @@ public class NominationForm {
     private String documentationInventories;
 
     // Section P: Supporting Materials
-    private Boolean lettersConsent = false;
-    private Boolean photos = false;
+    private String lettersConsentFileName;
+    private String lettersConsentFileType;
+    @Lob @Basic(fetch = FetchType.LAZY) @JsonIgnore
+    private byte[] lettersConsentFileData;
+
+    private String photosFileName;
+    private String photosFileType;
+    @Lob @Basic(fetch = FetchType.LAZY) @JsonIgnore
+    private byte[] photosFileData;
+
     private Boolean video = false;
-    private Boolean archivalMaterials = false;
-    @Column(name = "references_provided")
-    private Boolean referencesProvided = false;
+
+    private String archivalMaterialsFileName;
+    private String archivalMaterialsFileType;
+    @Lob @Basic(fetch = FetchType.LAZY) @JsonIgnore
+    private byte[] archivalMaterialsFileData;
+
+    private String referencesFileName;
+    private String referencesFileType;
+    @Lob @Basic(fetch = FetchType.LAZY) @JsonIgnore
+    private byte[] referencesFileData;
 
     // Section Q: Declaration and Signature
     private String declarantName;
