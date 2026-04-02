@@ -3,6 +3,7 @@ package com.ncdc.ica.cch.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,6 +24,11 @@ public class NominationForm {
     private String position;
     private String email;
     private String telephone;
+
+    // ICA membership status
+    private Boolean icaMember;
+    @JsonProperty("icaAffiliated")
+    private Boolean affiliatedToIcaMember;
 
     // Section B: Nomination Details
     @Column(length = 300)

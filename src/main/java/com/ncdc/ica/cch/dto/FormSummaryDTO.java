@@ -13,6 +13,9 @@ public class FormSummaryDTO {
     private String contactPerson;
     private LocalDate submissionDate;
 
+    private Boolean icaMember;
+    private Boolean icaAffiliated;
+
     // File availability
     private boolean hasLettersConsent;
     private boolean hasPhotos;

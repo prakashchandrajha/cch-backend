@@ -39,6 +39,8 @@ public class PdfService {
             addField(document, "Position", form.getPosition());
             addField(document, "Email", form.getEmail());
             addField(document, "Telephone", form.getTelephone());
+            addField(document, "ICA Member", form.getIcaMember() != null && form.getIcaMember() ? "Yes" : "No");
+            addField(document, "Affiliated to ICA Member", form.getAffiliatedToIcaMember() != null && form.getAffiliatedToIcaMember() ? "Yes" : "No");
 
             // =========================
             // SECTION B
