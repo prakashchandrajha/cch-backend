@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/nominations")
@@ -52,9 +51,9 @@ public class NominationController {
 
         NominationFile file = nominationService.getFile(id);
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
-                .contentType(MediaType.parseMediaType(file.getContentType()))
-                .body(file.getData());
+    return ResponseEntity.ok()
+        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
+        .contentType(MediaType.parseMediaType(file.getContentType()))
+        .body(file.getFileData());
     }
 }

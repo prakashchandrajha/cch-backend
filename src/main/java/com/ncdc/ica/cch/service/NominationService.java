@@ -46,13 +46,13 @@ public class NominationService {
     private void saveFile(MultipartFile file, String type, Nomination nomination) throws Exception {
         if (file != null && !file.isEmpty()) {
 
-            NominationFile f = NominationFile.builder()
-                    .fileType(type)
-                    .fileName(file.getOriginalFilename())
-                    .contentType(file.getContentType())
-                    .data(file.getBytes())
-                    .nomination(nomination)
-                    .build();
+        NominationFile f = NominationFile.builder()
+            .fileType(type)
+            .fileName(file.getOriginalFilename())
+            .contentType(file.getContentType())
+            .fileData(file.getBytes())
+            .nomination(nomination)
+            .build();
 
             fileRepository.save(f);
         }

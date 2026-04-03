@@ -20,9 +20,9 @@ public class NominationFile {
     private String fileName;
     private String contentType;
 
-    @Lob
-    @Column(columnDefinition = "BYTEA")
-    private byte[] data;
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "file_data", nullable = true)
+    private byte[] fileData;
 
     @ManyToOne
     @JoinColumn(name = "nomination_id")

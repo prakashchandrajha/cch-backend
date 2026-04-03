@@ -3,4 +3,4 @@ server:
     context-path: /cch
 spring:
   profiles:
-    active: prod
+    active: dev
