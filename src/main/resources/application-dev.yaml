@@ -14,7 +14,7 @@ spring:
     open-in-view: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create   # ⚠️ dev only
+      ddl-auto: update   # ⚠️ dev only
     properties:
       hibernate:
         default_schema: public
