@@ -1,3 +1,8 @@
+server:
+  port: 2003
+  servlet:
+    context-path: /cch
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ncdc-ica-heritage
@@ -8,10 +13,13 @@ spring:
   jpa:
     open-in-view: false
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-
     hibernate:
-      ddl-auto: create
-
+      ddl-auto: create   # ⚠️ dev only
     properties:
       hibernate:
         default_schema: public
+    show-sql: true        # ✅ helpful in dev
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
