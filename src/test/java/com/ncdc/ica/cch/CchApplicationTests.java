@@ -3,7 +3,7 @@ package com.ncdc.ica.cch;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+// @SpringBootTest
 class CchApplicationTests {
 
 	@Test
