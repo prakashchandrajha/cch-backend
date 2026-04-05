@@ -4,3 +4,29 @@ server:
 spring:
   profiles:
     active: dev
+  # JPA Settings
+  jpa:
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        # Set true temporarily to verify Hibernate is talking to Postgres
+        show_sql: true
+        format_sql: true
+        # Explicit dialect — prevents auto-detection falling back to H2
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # ERP Datasource
+  # ⚠ Was: jdbcUrl  — Spring Boot reads "url", not "jdbcUrl".
+  #   "jdbcUrl" is the raw HikariCP property; Spring Boot's DataSourceProperties
+  #   only recognises "url". Using "jdbcUrl" caused Boot to ignore the config
+  #   entirely and fall back to an in-memory H2, so Hibernate never saw Postgres.
+  datasource:
+    url: jdbc:postgresql://192.168.1.200:5432/ncdc-ica-heritage
+    username: postgres
+    password: Aditya623880
+    driver-class-name: org.postgresql.Driver   # was: driverClassName (camelCase is not supported here)
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 10
