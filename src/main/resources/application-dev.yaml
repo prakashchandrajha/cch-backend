@@ -1,25 +1,12 @@
 server:
   port: 2003
-  servlet:
-    context-path: /cch
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/ncdc-ica-heritage
+    url: jdbc:postgresql://192.168.1.200:5432/ncdc-ica-heritage
     username: postgres
-    password: ${DB_PASSWORD:Aditya623880}
-    driver-class-name: org.postgresql.Driver
-
-  jpa:
-    open-in-view: false
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: create   # recreates tables fresh each startup
-    properties:
-      hibernate:
-        default_schema: public
-    show-sql: true        # ✅ helpful in dev
+    password: Aditya623880
   servlet:
     multipart:
-      max-file-size: 50MB
-      max-request-size: 100MB
+      max-file-size: 500MB
+      max-request-size: 500MB

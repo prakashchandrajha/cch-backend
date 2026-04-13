@@ -1,52 +1,107 @@
 @echo off
 SETLOCAL ENABLEDELAYEDEXPANSION
 
-REM Set variables
+echo ==============================
+echo 🚀 Starting Deployment
+echo ==============================
+
+REM -------------------------------
+REM Config
+REM -------------------------------
 set IMAGE_NAME=cch
 set CONTAINER_NAME=cch
 set DOCKER_IMAGE=maven:3.9.9-amazoncorretto-21
 
-REM Switch Docker context to default
-docker context use default
+REM -------------------------------
+REM Step 1: Switch Docker context to default
+REM -------------------------------
+echo [Step 1] Switching Docker context to default...
+docker context use default || goto :error
 
-REM Step 3: Pull the required Maven Docker image
-echo Pulling Docker image with Java 21 and Maven...
-docker pull %DOCKER_IMAGE%
+REM -------------------------------
+REM Step 2: Pull Docker image
+REM -------------------------------
+echo [Step 2] Pulling Docker image...
+docker pull %DOCKER_IMAGE% || goto :error
 
-REM Step 4: Build the Maven project inside Docker
-echo Building the project using Maven inside Docker...
-docker run --rm -v "%cd%":/usr/src/mymaven -w /usr/src/mymaven %DOCKER_IMAGE% mvn clean install
+REM -------------------------------
+REM Step 3: Build Maven project
+REM -------------------------------
+echo [Step 3] Building project with Maven...
+docker run --rm -v "%cd%":/usr/src/mymaven -w /usr/src/mymaven %DOCKER_IMAGE% mvn clean install || goto :error
 
-REM GET Current Image ID
+REM -------------------------------
+REM Step 4: Get current container image ID (if exists)
+REM -------------------------------
+echo [Step 4] Fetching existing container image ID...
+set IMAGE_ID=
 FOR /F "delims=" %%i IN ('docker inspect --format "{{.Image}}" %CONTAINER_NAME% 2^>nul') DO SET IMAGE_ID=%%i
-echo IMAGE ID: %IMAGE_ID%
+echo Current IMAGE ID: !IMAGE_ID!
 
-REM Switch Docker context to ica-server
-docker context use ica-server
+REM -------------------------------
+REM Step 5: Switch Docker context to server
+REM -------------------------------
+echo [Step 5] Switching Docker context to ica-server...
+docker context use ica-server || goto :error
 
-REM Step 5: Build the Docker image with unique and latest tags
+REM -------------------------------
+REM Step 6: Get Git commit tag
+REM -------------------------------
+echo [Step 6] Getting Git commit tag...
 FOR /F "delims=" %%i IN ('git rev-parse --short HEAD') DO SET IMAGE_TAG=%%i
-echo Building Docker image with tags: %IMAGE_NAME%:%IMAGE_TAG% and %IMAGE_NAME%:latest...
-docker build -t %IMAGE_NAME%:%IMAGE_TAG% -t %IMAGE_NAME%:latest .
+IF "!IMAGE_TAG!"=="" (
+    echo ❌ Failed to get Git tag
+    goto :error
+)
+echo IMAGE TAG: !IMAGE_TAG!
 
-REM Step 6: Stop and remove the existing container (if running)
-echo Stopping and removing the existing container (if any)...
-docker rm -f %CONTAINER_NAME% 2>nul
+REM -------------------------------
+REM Step 7: Build Docker image
+REM -------------------------------
+echo [Step 7] Building Docker image...
+docker build -t %IMAGE_NAME%:!IMAGE_TAG! -t %IMAGE_NAME%:latest . || goto :error
 
-REM Step 7: Remove old unused Docker images
-echo Cleaning up old Docker images...
+REM -------------------------------
+REM Step 8: Remove old container (if exists)
+REM -------------------------------
+echo [Step 8] Removing old container (if exists)...
+docker rm -f %CONTAINER_NAME% >nul 2>&1
+
+REM -------------------------------
+REM Step 9: Remove old image (if exists)
+REM -------------------------------
+echo [Step 9] Removing old image (if exists)...
 IF DEFINED IMAGE_ID (
-docker rmi %IMAGE_ID%
+    docker rmi !IMAGE_ID! >nul 2>&1
 )
 
-REM Step 8: Deploy the new container
-echo Deploying the new Docker container...
+REM -------------------------------
+REM Step 10: Run new container
+REM -------------------------------
+echo [Step 10] Starting new container...
 docker run -d ^
 --restart always ^
 --network host ^
 --name %CONTAINER_NAME% ^
-%IMAGE_NAME%:latest
+%IMAGE_NAME%:latest || goto :error
 
-echo Deployment completed successfully!
+REM -------------------------------
+REM SUCCESS
+REM -------------------------------
+echo ==============================
+echo ✅ Deployment Successful!
+echo ==============================
+goto :end
 
+REM -------------------------------
+REM ERROR HANDLER
+REM -------------------------------
+:error
+echo ==============================
+echo ❌ Deployment Failed!
+echo Check logs above.
+echo ==============================
+exit /b 1
+
+:end
 ENDLOCAL

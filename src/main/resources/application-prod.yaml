@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://172.18.0.1:5432/cch
+    url: jdbc:postgresql://172.18.0.1:5432/cch-coop
     username: postgres
     password: 81524Rac
     driver-class-name: org.postgresql.Driver

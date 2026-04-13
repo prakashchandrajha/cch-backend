@@ -16,5 +16,6 @@ public class NominationSummary {
     private String heritageCategory;
     private String contactPerson;
     private String email;
+    private String declarationDate;
     private LocalDateTime submittedAt;
 }

@@ -159,6 +159,7 @@ public class NominationService {
                 .heritageCategory(n.getHeritageCategory())
                 .contactPerson(n.getContactPerson())
                 .email(n.getEmail())
+                .declarationDate(n.getDeclarationDate())
                 .submittedAt(n.getSubmittedAt())
                 .build();
     }
